@@ -12,8 +12,12 @@ De todo el catálogo de requisitos, los que definen la arquitectura son: crear e
 
 ## Decisión arquitectónica
 
-*(Esta sección se completa en el siguiente paso, cuando comparemos las alternativas estructurales.)*
+Se adopta un **monolito modular con límites claros entre dominios** (Pedidos, Inventario, Ruteo, Entregas), en lugar de distribuir el sistema en microservicios independientes.
 
----
+La ventana de entrega se incorpora como un campo **opcional** en el contrato de creación de pedidos, de modo que las apps antiguas sigan funcionando sin cambios. El módulo de Ruteo queda aislado detrás de una interfaz propia, para que una falla o lentitud del proveedor externo de mapas no bloquee la confirmación de pedidos durante un pico de campaña.
+
+Se descartó una arquitectura distribuida por dominios porque, para el volumen actual de Rutify, añadiría complejidad operativa sin evidencia de que el sistema la necesite. La separación se reconsiderará en el futuro si las métricas (por ejemplo, saturación del módulo de Ruteo) lo justifican.
+
+El detalle completo de la decisión, las alternativas descartadas y los criterios de revisión está documentado en el [ADR-001](docs/actividad-2/adr-decision-estructural.md).
 
 *(El catálogo completo de requisitos, la matriz de priorización, los escenarios de calidad y la comparación de alternativas están en `/docs/actividad-2`.)*
